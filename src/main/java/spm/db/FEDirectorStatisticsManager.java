@@ -16,8 +16,8 @@ public class FEDirectorStatisticsManager {
             session.beginTransaction();
             dateTimeList = session.createQuery("from DateTime where timeKey in " +
                     "(select id.dateTime from FEDirectorStatistics " +
-                    "where id.fedirector = :fedirector and queue7 > 0)")
-                    .setParameter("fedirector", feDirector)
+                    "where id.feDirector = :feDirector and queue7 + queue8 + queue9 > 0)")
+                    .setParameter("feDirector", feDirector)
                     .getResultList();
 
             session.getTransaction().commit();

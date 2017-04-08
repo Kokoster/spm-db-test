@@ -2,6 +2,7 @@ package spm.db;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
 public class DateTime implements Serializable {
     @Id
     @Column(name = "timekey")
-    private int timeKey;
+    private BigDecimal timeKey;
     private Timestamp datestamp;
 
     @OneToMany(mappedBy = "id.dateTime", targetEntity = FEDirectorStatistics.class)
@@ -23,11 +24,11 @@ public class DateTime implements Serializable {
 
     public DateTime() {};
 
-    public int getTimeKey() {
+    public BigDecimal getTimeKey() {
         return timeKey;
     }
 
-    public void setTimeKey(int timeKey) {
+    public void setTimeKey(BigDecimal timeKey) {
         this.timeKey = timeKey;
     }
 
@@ -49,6 +50,6 @@ public class DateTime implements Serializable {
 
     @Override
     public String toString() {
-        return Integer.toString(timeKey);
+        return timeKey.toString();
     }
 }

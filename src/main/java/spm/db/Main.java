@@ -8,19 +8,17 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         FEDirectorManager manager = new FEDirectorManager();
-        StorageGroupManager storageGroupManager = new StorageGroupManager();
+        FEDirectorStatisticsManager statisticsManager = new FEDirectorStatisticsManager();
 
         List fedirectors = manager.getFEDirectors();
 
-        for (Object fedirector : fedirectors) {
-            System.out.println(fedirector);
-        }
-
-        List storageGroups = storageGroupManager.getStorageGroups();
-
-        for (Object storageGroup : storageGroups) {
-            System.out.println(storageGroup);
-        }
+//        List businessDateTime = statisticsManager
+//                .searchFEDirectorBusinessTime((FEDirector) fedirectors.get(0));
+//
+//        System.out.println(fedirectors.get(0));
+//        for (Object dateTime : businessDateTime) {
+//            System.out.println(dateTime);
+//        }
 
         SPMUtil.closeSession();
     }

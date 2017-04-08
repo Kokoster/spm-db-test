@@ -1,25 +1,35 @@
 package spm.db;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by kokoster on 07/04/2017.
  */
-public class FEDirector {
-    private int id;
+
+@Entity
+@Table(name = "dwd_fedirector")
+public class FEDirector implements Serializable {
+    @Id
+    @Column(name = "fedirectorkey")
+    private int fedirectorKey;
+
+    @Column(name = "fedirectorid")
     private String name;
+
+    @OneToMany(mappedBy = "id.feDirector")
+    private Set<FEDirectorStatistics> statistics = new HashSet<>();
 
     public FEDirector() {};
 
-    public FEDirector(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public int getFedirectorKey() {
+        return fedirectorKey;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setFedirectorKey(int fedirectorKey) {
+        this.fedirectorKey = fedirectorKey;
     }
 
     public String getName() {
@@ -30,8 +40,16 @@ public class FEDirector {
         this.name = name;
     }
 
+    public Set<FEDirectorStatistics> getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Set<FEDirectorStatistics> statistics) {
+        this.statistics = statistics;
+    }
+
     @Override
     public String toString() {
-        return id + ": " + name;
+        return fedirectorKey + ": " + name;
     }
 }

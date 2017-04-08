@@ -1,18 +1,13 @@
 package spm.db;
 
 /**
- * Created by kokoster on 07/04/2017.
+ * Created by kokoster on 08/04/2017.
  */
-public class FEDirector {
+public class StorageGroup {
     private int id;
     private String name;
 
-    public FEDirector() {};
-
-    public FEDirector(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    public StorageGroup() {};
 
     public int getId() {
         return id;

@@ -3,26 +3,25 @@ package spm.db;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kokoster on 07/04/2017.
+ * Created by kokoster on 08/04/2017.
  */
-public class FEDirectorManager {
-    public List getFEDirectors() {
-        List fedirectors = new ArrayList<FEDirector>();
+public class StorageGroupManager {
+    public List getStorageGroups() {
+        List storageGroups = new ArrayList<StorageGroup>();
 
         try (Session session = SPMUtil.getSessionFactory().openSession()) {
             session.beginTransaction();
-            fedirectors = session.createQuery("FROM FEDirector").getResultList();
+            storageGroups = session.createQuery("FROM StorageGroup").getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
             SPMUtil.closeSession();
         }
 
-        return fedirectors;
+        return storageGroups;
     }
 }

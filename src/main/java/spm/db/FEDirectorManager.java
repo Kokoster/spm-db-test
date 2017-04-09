@@ -2,6 +2,7 @@ package spm.db;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import spm.db.models.FEDirector;
 
 
 import java.util.ArrayList;

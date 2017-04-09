@@ -1,7 +1,7 @@
 package spm.db;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import spm.db.models.StorageGroup;
 
 import java.util.ArrayList;
 import java.util.List;

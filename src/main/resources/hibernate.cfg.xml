@@ -25,9 +25,10 @@
 
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping class="spm.db.FEDirector"/>
-        <mapping class="spm.db.StorageGroup"/>
-        <mapping class="spm.db.DateTime"/>
-        <mapping class="spm.db.FEDirectorStatistics"/>
+        <mapping class="spm.db.models.FEDirector"/>
+        <mapping class="spm.db.models.StorageGroup"/>
+        <mapping class="spm.db.models.DateTime"/>
+        <mapping class="spm.db.models.FEDirectorStatistics"/>
+        <mapping class="spm.db.models.StorageGroupStatistics"/>
     </session-factory>
 </hibernate-configuration>

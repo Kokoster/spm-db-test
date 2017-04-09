@@ -1,4 +1,4 @@
-package spm.db;
+package spm.db.models;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;

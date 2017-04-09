@@ -1,6 +1,8 @@
 package spm.db;
 
 import org.hibernate.Session;
+import spm.db.models.DateTime;
+import spm.db.models.FEDirector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class FEDirectorStatisticsManager {
             session.beginTransaction();
             dateTimeList = session.createQuery("from DateTime where timeKey in " +
                     "(select id.dateTime from FEDirectorStatistics " +
-                    "where id.feDirector = :feDirector and queue7 + queue8 + queue9 > 0)")
+                    "where id.feDirector = :feDirector and queue7 + queue8 + queue9 >= 1)")
                     .setParameter("feDirector", feDirector)
                     .getResultList();
 

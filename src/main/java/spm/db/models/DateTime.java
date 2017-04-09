@@ -1,4 +1,4 @@
-package spm.db;
+package spm.db.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,10 +17,15 @@ public class DateTime implements Serializable {
     @Id
     @Column(name = "timekey")
     private BigDecimal timeKey;
+
+    @Column(name = "datestamp")
     private Timestamp datestamp;
 
     @OneToMany(mappedBy = "id.dateTime", targetEntity = FEDirectorStatistics.class)
     private Set<DateTime> fedirectorStatistics = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.dateTime", targetEntity = StorageGroupStatistics.class)
+    private Set<DateTime> storageGroupStatistics = new HashSet<>();
 
     public DateTime() {};
 
@@ -48,8 +53,16 @@ public class DateTime implements Serializable {
         this.fedirectorStatistics = fedirectorStatistics;
     }
 
+    public Set<DateTime> getStorageGroupStatistics() {
+        return storageGroupStatistics;
+    }
+
+    public void setStorageGroupStatistics(Set<DateTime> storageGroupStatistics) {
+        this.storageGroupStatistics = storageGroupStatistics;
+    }
+
     @Override
     public String toString() {
-        return timeKey.toString();
+        return datestamp.toString();
     }
 }

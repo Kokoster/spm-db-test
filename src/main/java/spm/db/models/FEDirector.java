@@ -1,4 +1,4 @@
-package spm.db;
+package spm.db.models;
 
 import javax.persistence.*;
 import java.io.Serializable;

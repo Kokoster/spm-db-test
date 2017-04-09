@@ -1,6 +1,9 @@
 package spm.db.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "dwd_storagegroup")
-public class StorageGroup {
+public class StorageGroup implements Serializable {
     @Id
     @Column(name = "storagegroupkey")
     private int storageGroupKey;
@@ -18,6 +21,7 @@ public class StorageGroup {
     @Column(name = "storagegroupid")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.storageGroup")
     private Set<StorageGroupStatistics> statistics = new HashSet<>();
 

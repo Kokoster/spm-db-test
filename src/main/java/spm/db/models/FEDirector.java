@@ -1,5 +1,7 @@
 package spm.db.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,6 +21,7 @@ public class FEDirector implements Serializable {
     @Column(name = "fedirectorid")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.feDirector")
     private Set<FEDirectorStatistics> statistics = new HashSet<>();
 

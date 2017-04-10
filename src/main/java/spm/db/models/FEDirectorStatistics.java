@@ -1,5 +1,7 @@
 package spm.db.models;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -20,8 +22,10 @@ public class FEDirectorStatistics implements Serializable {
 
     @Column(name = "spmqueuedepcount7")
     private float queue7;
+
     @Column(name = "spmqueuedepcount8")
     private float queue8;
+
     @Column(name = "spmqueuedepcount9")
     private float queue9;
 
@@ -95,5 +99,10 @@ public class FEDirectorStatistics implements Serializable {
 
     public int hashCode() {
         return (getId() != null ? getId().hashCode() : 0);
+    }
+
+    @Override
+    public String toString() {
+        return id.getFEDirector().getFedirectorKey() + ": " + getDateTime().getDatestamp();
     }
 }

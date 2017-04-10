@@ -1,5 +1,8 @@
 package spm.db.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,16 +17,20 @@ import java.util.Set;
 @Entity
 @Table(name = "dwd_time_n_utc")
 public class DateTime implements Serializable {
+    @JsonIgnore
     @Id
     @Column(name = "timekey")
     private BigDecimal timeKey;
 
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     @Column(name = "datestamp")
     private Timestamp datestamp;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.dateTime", targetEntity = FEDirectorStatistics.class)
     private Set<DateTime> fedirectorStatistics = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.dateTime", targetEntity = StorageGroupStatistics.class)
     private Set<DateTime> storageGroupStatistics = new HashSet<>();
 

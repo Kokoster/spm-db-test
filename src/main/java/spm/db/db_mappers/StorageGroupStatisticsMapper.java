@@ -18,5 +18,5 @@ public interface StorageGroupStatisticsMapper
         extends CrudRepository<StorageGroupStatistics, StorageGroupStatisticsID> {
     @Query("from StorageGroupStatistics where id.dateTime = :dateTime " +
             "order by queriesCount")
-    List<StorageGroup> findBusiestStorageGroups(@Param("dateTime") DateTime dateTime);
+    List<StorageGroupStatistics> findBusiestStorageGroups(@Param("dateTime") DateTime dateTime);
 }

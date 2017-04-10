@@ -10,7 +10,7 @@ import java.util.List;
  * Created by kokoster on 10/04/2017.
  */
 public class OutlierSearcher {
-    private List<StorageGroup> searchOutliers(List storageGroupStatistics) {
+    public List<StorageGroup> searchOutliers(List<StorageGroupStatistics> storageGroupStatistics) {
         int size = storageGroupStatistics.size();
 
         float lowerQuartile = findMedianValue(storageGroupStatistics, 0, (size - 1) / 2);
@@ -35,7 +35,7 @@ public class OutlierSearcher {
         return storageGroups;
     }
 
-    private float findMedianValue(List storageGroupStatistics, int startIndex, int size) {
+    private float findMedianValue(List<StorageGroupStatistics> storageGroupStatistics, int startIndex, int size) {
         float median = ((StorageGroupStatistics) storageGroupStatistics.get(startIndex + (size - 1) / 2))
                 .getQueriesCount();
 

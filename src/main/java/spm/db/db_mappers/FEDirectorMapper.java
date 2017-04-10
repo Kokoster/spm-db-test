@@ -1,11 +1,11 @@
 package spm.db.db_mappers;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import org.springframework.data.repository.CrudRepository;
 import spm.db.models.FEDirector;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,4 +15,7 @@ import java.util.List;
 public interface FEDirectorMapper extends CrudRepository<FEDirector, Integer> {
     @Query("from FEDirector")
     List<FEDirector> readFEDirectors();
+
+    @Query("from FEDirector where name = :feDirectorName")
+    FEDirector findFEDirectorByName(@Param("feDirectorName") String feDirectorName);
 }

@@ -11,6 +11,7 @@ import spm.db.db_mappers.DateTimeStatisticsMapper;
 import spm.db.db_mappers.StorageGroupMapper;
 import spm.db.db_mappers.StorageGroupStatisticsMapper;
 import spm.db.models.*;
+import spm.db.utils.OutlierSearcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,12 +59,32 @@ public class SPMConnectionController {
     }
 
     @RequestMapping(value = "/fedirectors/busiest-storagegroups/by-key", method = RequestMethod.GET)
-    public Integer getBusiestStorageGroupsByKey(@RequestParam("fedirectorkey") Integer fedirectorKey) {
-        return fedirectorKey;
+    public SPMTotalStatistics getBusiestStorageGroupsByKey(@RequestParam("fedirectorkey") Integer fedirectorKey) {
+        FEDirector feDirector = feDirectorMapper.findOne(fedirectorKey);
+        return getBusiestStorageGroups(feDirector);
     }
 
     @RequestMapping(value = "/fedirectors/busiest-storagegroups/by-name", method = RequestMethod.GET)
-    public String getBusiestStorageGroupsByName(@RequestParam("fedirectorname") String fedirectorName) {
-        return fedirectorName;
+    public SPMTotalStatistics getBusiestStorageGroupsByName(@RequestParam("fedirectorname") String fedirectorName) {
+        FEDirector feDirector = feDirectorMapper.findFEDirectorByName(fedirectorName);
+        return getBusiestStorageGroups(feDirector);
+    }
+
+    private SPMTotalStatistics getBusiestStorageGroups(FEDirector feDirector) {
+        OutlierSearcher outlierSearcher = new OutlierSearcher();
+
+        List<DateTime> dateTimeList = dateTimeStatisticsMapper.findFEDirectorBusinessTime(feDirector);
+        SPMTotalStatistics totalStatistics = new SPMTotalStatistics(feDirector);
+
+        for (DateTime dateTime : dateTimeList) {
+            List<StorageGroupStatistics> storageGroupStatistics =
+                    storageGroupStatisticsMapper.findBusiestStorageGroups(dateTime);
+
+            List<StorageGroup> storageGroups = outlierSearcher.searchOutliers(storageGroupStatistics);
+
+            totalStatistics.addStorageGroups(storageGroups, dateTime);
+        }
+
+        return totalStatistics;
     }
 }

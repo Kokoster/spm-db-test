@@ -2,6 +2,7 @@ package spm.db.models;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+
 import java.io.Serializable;
 
 /**

@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.bind.annotation.RequestMethod;
-import spm.db.db_mappers.FEDirectorMapper;
-import spm.db.db_mappers.DateTimeStatisticsMapper;
-import spm.db.db_mappers.StorageGroupMapper;
-import spm.db.db_mappers.StorageGroupStatisticsMapper;
+import spm.db.db_repositories.FEDirectorRepository;
+import spm.db.db_repositories.DateTimeStatisticsRepository;
+import spm.db.db_repositories.StorageGroupRepository;
+import spm.db.db_repositories.StorageGroupStatisticsRepository;
 import spm.db.models.*;
 import spm.db.utils.OutlierDetector;
 
@@ -22,35 +22,35 @@ import java.util.List;
 @RestController
 public class SPMConnectionController {
     @Autowired
-    FEDirectorMapper feDirectorMapper;
+    FEDirectorRepository feDirectorRepository;
 
     @Autowired
-    StorageGroupMapper storageGroupMapper;
+    StorageGroupRepository storageGroupRepository;
 
     @Autowired
-    DateTimeStatisticsMapper dateTimeStatisticsMapper;
+    DateTimeStatisticsRepository dateTimeStatisticsRepository;
 
     @Autowired
-    StorageGroupStatisticsMapper storageGroupStatisticsMapper;
+    StorageGroupStatisticsRepository storageGroupStatisticsRepository;
 
     @RequestMapping(value = "/fedirectors", method = RequestMethod.GET)
     public List<FEDirector> getFEDirectors() {
-        return feDirectorMapper.readFEDirectors();
+        return feDirectorRepository.readFEDirectors();
     }
 
     @RequestMapping(value = "/storagegroups", method = RequestMethod.GET)
     public List<StorageGroup> getStorageGroups() {
-        return storageGroupMapper.readStorageGroups();
+        return storageGroupRepository.readStorageGroups();
     }
 
     @RequestMapping(value = "/fedirectors/business", method = RequestMethod.GET)
     public List<FEDirectorBusinessStatistics> getFEDirectorsBusiness() {
-        List<FEDirector> feDirectors = feDirectorMapper.readFEDirectors();
+        List<FEDirector> feDirectors = feDirectorRepository.readFEDirectors();
 
         List<FEDirectorBusinessStatistics> businessStatisticsList =
                 new ArrayList<>();
         for (FEDirector feDirector : feDirectors) {
-            List<DateTime> dateTimeList = dateTimeStatisticsMapper.findFEDirectorBusinessTime(feDirector);
+            List<DateTime> dateTimeList = dateTimeStatisticsRepository.findFEDirectorBusinessTime(feDirector);
 
             businessStatisticsList.add(new FEDirectorBusinessStatistics(feDirector, dateTimeList));
         }
@@ -60,25 +60,25 @@ public class SPMConnectionController {
 
     @RequestMapping(value = "/fedirectors/busiest-storagegroups/by-key", method = RequestMethod.GET)
     public SPMTotalStatistics getBusiestStorageGroupsByKey(@RequestParam("fedirectorkey") Integer fedirectorKey) {
-        FEDirector feDirector = feDirectorMapper.findOne(fedirectorKey);
+        FEDirector feDirector = feDirectorRepository.findOne(fedirectorKey);
         return getBusiestStorageGroups(feDirector);
     }
 
     @RequestMapping(value = "/fedirectors/busiest-storagegroups/by-name", method = RequestMethod.GET)
     public SPMTotalStatistics getBusiestStorageGroupsByName(@RequestParam("fedirectorname") String fedirectorName) {
-        FEDirector feDirector = feDirectorMapper.findFEDirectorByName(fedirectorName);
+        FEDirector feDirector = feDirectorRepository.findFEDirectorByName(fedirectorName);
         return getBusiestStorageGroups(feDirector);
     }
 
     private SPMTotalStatistics getBusiestStorageGroups(FEDirector feDirector) {
         OutlierDetector outlierDetector = new OutlierDetector();
 
-        List<DateTime> dateTimeList = dateTimeStatisticsMapper.findFEDirectorBusinessTime(feDirector);
+        List<DateTime> dateTimeList = dateTimeStatisticsRepository.findFEDirectorBusinessTime(feDirector);
         SPMTotalStatistics totalStatistics = new SPMTotalStatistics(feDirector);
 
         for (DateTime dateTime : dateTimeList) {
             List<StorageGroupStatistics> storageGroupStatistics =
-                    storageGroupStatisticsMapper.findBusiestStorageGroups(dateTime);
+                    storageGroupStatisticsRepository.findBusiestStorageGroups(dateTime);
 
             List<StorageGroup> storageGroups = outlierDetector.searchOutliers(storageGroupStatistics);
 

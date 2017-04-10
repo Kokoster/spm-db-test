@@ -1,7 +1,5 @@
 package spm.db.models;
 
-import org.hibernate.annotations.Formula;
-
 import javax.persistence.*;
 import java.io.Serializable;
 

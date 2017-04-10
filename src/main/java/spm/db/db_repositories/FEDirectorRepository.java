@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * Created by kokoster on 07/04/2017.
  */
-
 public interface FEDirectorRepository extends CrudRepository<FEDirector, Integer> {
     @Query("from FEDirector")
     List<FEDirector> readFEDirectors();

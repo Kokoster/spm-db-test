@@ -11,7 +11,7 @@ import spm.db.db_mappers.DateTimeStatisticsMapper;
 import spm.db.db_mappers.StorageGroupMapper;
 import spm.db.db_mappers.StorageGroupStatisticsMapper;
 import spm.db.models.*;
-import spm.db.utils.OutlierSearcher;
+import spm.db.utils.OutlierDetector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,7 @@ public class SPMConnectionController {
     }
 
     private SPMTotalStatistics getBusiestStorageGroups(FEDirector feDirector) {
-        OutlierSearcher outlierSearcher = new OutlierSearcher();
+        OutlierDetector outlierDetector = new OutlierDetector();
 
         List<DateTime> dateTimeList = dateTimeStatisticsMapper.findFEDirectorBusinessTime(feDirector);
         SPMTotalStatistics totalStatistics = new SPMTotalStatistics(feDirector);
@@ -80,7 +80,7 @@ public class SPMConnectionController {
             List<StorageGroupStatistics> storageGroupStatistics =
                     storageGroupStatisticsMapper.findBusiestStorageGroups(dateTime);
 
-            List<StorageGroup> storageGroups = outlierSearcher.searchOutliers(storageGroupStatistics);
+            List<StorageGroup> storageGroups = outlierDetector.searchOutliers(storageGroupStatistics);
 
             totalStatistics.addStorageGroups(storageGroups, dateTime);
         }

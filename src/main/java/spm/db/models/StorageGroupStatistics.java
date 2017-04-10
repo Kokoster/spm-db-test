@@ -27,6 +27,11 @@ public class StorageGroupStatistics implements Serializable {
 
     public StorageGroupStatistics() {}
 
+    public StorageGroupStatistics(StorageGroup storageGroup, float queriesCount) {
+        setStorageGroup(storageGroup);
+        setQueriesCount(queriesCount);
+    }
+
     public StorageGroupStatisticsID getId() {
         return id;
     }
@@ -40,7 +45,7 @@ public class StorageGroupStatistics implements Serializable {
         return getId().getStorageGroup();
     }
 
-    public void setFEDirector(StorageGroup storageGroup) {
+    public void setStorageGroup(StorageGroup storageGroup) {
         getId().setStorageGroup(storageGroup);
     }
 

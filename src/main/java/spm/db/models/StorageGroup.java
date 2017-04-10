@@ -27,6 +27,10 @@ public class StorageGroup implements Serializable {
 
     public StorageGroup() {};
 
+    public StorageGroup(int storageGroupKey) {
+        setStorageGroupKey(storageGroupKey);
+    }
+
     public int getStorageGroupKey() {
         return storageGroupKey;
     }
@@ -54,5 +58,18 @@ public class StorageGroup implements Serializable {
     @Override
     public String toString() {
         return storageGroupKey + ": " + name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        return storageGroupKey == ((StorageGroup) obj).storageGroupKey;
+    }
+
+    @Override
+    public int hashCode() {
+        return storageGroupKey;
     }
 }

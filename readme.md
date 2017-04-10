@@ -1,4 +1,4 @@
-Database settings configured in application.properties
+Database settings configured in resources/application.properties
 Default database: spm_database
 Default user: spa
 

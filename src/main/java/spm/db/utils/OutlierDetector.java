@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by kokoster on 10/04/2017.
+ * Searches storagegroups with anomaly queries count.
+ * If queries counts are equal for several anomaly storagegroups, returns all of them
  */
 public class OutlierDetector {
     public List<StorageGroup> searchOutliers(List<StorageGroupStatistics> storageGroupStatistics) {
